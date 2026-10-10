@@ -38,7 +38,7 @@ export function startServer(env) {
   };
   p.stdout.on("data", (d) => (out += d)); p.stderr.on("data", (d) => (out += d));
   srv.ready = new Promise((resolve, reject) => {
-    p.stdout.on("data", () => out.includes("Labbook running") && resolve(srv));
+    p.stdout.on("data", () => out.includes("Labnotebook running") && resolve(srv));
     p.on("exit", (code) => reject(Object.assign(new Error(`server exited ${code}: ${out}`), { code })));
   });
   return srv;

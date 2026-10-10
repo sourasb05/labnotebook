@@ -1,18 +1,18 @@
 <h1 align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/images/logo-dark.png">
-    <img src="docs/images/logo.png" alt="Labbook" width="400">
+    <img src="docs/images/logo.png" alt="Labnotebook" width="480">
   </picture>
 </h1>
 
-[![CI](https://github.com/sourasb05/md_share/actions/workflows/ci.yml/badge.svg)](https://github.com/sourasb05/md_share/actions/workflows/ci.yml)
+[![CI](https://github.com/sourasb05/labnotebook/actions/workflows/ci.yml/badge.svg)](https://github.com/sourasb05/labnotebook/actions/workflows/ci.yml)
 
 > **Write the notes, the equations and the to-do list together, live.**
 
-Labbook is a shared notebook for research groups. Open a link and everyone types into the same page
+Labnotebook is a shared notebook for research groups. Open a link and everyone types into the same page
 at once, with LaTeX math that renders as you write. It runs on your own server, so your notes stay with you.
 
-![Labbook editor: Markdown and LaTeX on the left, the rendered page on the right, with a highlighted sentence and a colleague's live cursor](docs/images/editor-light.jpg)
+![Labnotebook editor: Markdown and LaTeX on the left, the rendered page on the right, with a highlighted sentence and a colleague's live cursor](docs/images/editor-light.jpg)
 
 <sub>A real session: Alice writes on the left, the page renders on the right, and Bob's cursor (green label) is editing the same note at the same moment.</sub>
 
@@ -71,9 +71,9 @@ The core user is a **research group of 5–40 people** that meets weekly and kee
 | **AI rephrase (optional)** | Select a passage and Claude suggests a clearer version with the same meaning, keeping math and formatting exact. Edit it, or ask for "shorter" or "more formal", before replacing. It never overwrites a colleague's edit made in the meantime. |
 
 <p>
-  <img src="docs/images/editor-dark.jpg" alt="Labbook in dark theme with the highlight colour palette open and three people online" width="72%">
+  <img src="docs/images/editor-dark.jpg" alt="Labnotebook in dark theme with the highlight colour palette open and three people online" width="72%">
   &nbsp;
-  <img src="docs/images/phone-paper.jpg" alt="Labbook on a phone in the Paper theme, showing the rendered note" width="24%">
+  <img src="docs/images/phone-paper.jpg" alt="Labnotebook on a phone in the Paper theme, showing the rendered note" width="24%">
 </p>
 <sub>The same note in the dark theme with the highlight palette open, and on a phone in the Paper theme. Each person's theme is their own choice.</sub>
 
@@ -81,7 +81,7 @@ The core user is a **research group of 5–40 people** that meets weekly and kee
 
 ```mermaid
 flowchart LR
-  A["Alice types"] -- "the edit (a few bytes)" --> S["Labbook server<br/>merges and relays edits"]
+  A["Alice types"] -- "the edit (a few bytes)" --> S["Labnotebook server<br/>merges and relays edits"]
   S -- broadcast --> B["Bob's screen"]
   S -- broadcast --> C["Carol's screen"]
   S -- "saved ~1.5 s after typing stops" --> D[("Database")]
@@ -92,7 +92,7 @@ when people type at the same moment (Yjs, a conflict-free data type).
 
 ## Why it helps
 
-| Situation | Without Labbook | With Labbook |
+| Situation | Without Labnotebook | With Labnotebook |
 | --- | --- | --- |
 | Equations in meeting notes | Photos of the whiteboard, or LaTeX pasted as raw text | Type `$\eta = 3\times10^{-4}$` and everyone sees it typeset |
 | Several note-takers | One person types; others email corrections afterwards | Everyone writes into the same page during the meeting |
@@ -103,7 +103,7 @@ when people type at the same moment (Yjs, a conflict-free data type).
 
 **Compared with the usual alternatives** (by category; individual products differ):
 
-| | Labbook | Cloud document editors | LaTeX project editors | Files on a shared drive |
+| | Labnotebook | Cloud document editors | LaTeX project editors | Files on a shared drive |
 | --- | --- | --- | --- | --- |
 | Live co-editing | **Yes**, named cursors | Yes | Yes | No: copies conflict |
 | Typing LaTeX math | **Yes**, renders instantly | Limited equation tools | Yes, after a compile | Depends on the file |
@@ -135,7 +135,7 @@ flowchart LR
 - **Changes apply instantly.** Removing someone, or making a note private, disconnects their open editor at once; promoting them reconnects them with the new rights.
 - **Revocable sessions.** Sessions are stored on the server (only a SHA-256 hash of each token). Signing out disconnects open editors, and removing a domain from the allowlist locks its users out.
 - **Abuse limits.** Sign-in links work once, expire after 15 minutes and survive mail scanners. Sign-in emails are rate-limited per address and per network address.
-- **Other websites can't act for you.** Changes and live (WebSocket) connections are only accepted from Labbook's own pages, checked with the `Origin` header.
+- **Other websites can't act for you.** Changes and live (WebSocket) connections are only accepted from Labnotebook's own pages, checked with the `Origin` header.
 - **Notes can't attack readers.** HTML in notes passes through DOMPurify and a strict Content-Security-Policy: no scripts, forms, iframes or outside images, and only `color`/`background-color` styles.
 - **Hardened deployment.** The Docker image runs as a non-root user with a read-only filesystem and no Linux capabilities. Behind HTTPS, cookies become `__Host-` + `Secure` and HSTS is sent.
 - **AI is opt-in and minimal.** It's off until an administrator adds a key. Only the selected passage is sent, only when someone clicks Rephrase, and use is rate-limited per person.
@@ -144,7 +144,7 @@ flowchart LR
 
 - **Domain-wide trust.** Anyone with a verified address at an allowed domain can sign in and create notes. They can only see notes shared with them, but there is no admin panel yet to block one person (remove their sessions or narrow the domain list).
 - **No version history yet.** Run the nightly backup (`npm run backup`) and copy it off the server.
-- **HTTPS is your hosting's job.** Use the included Caddy setup, and never expose Labbook on a network without HTTPS.
+- **HTTPS is your hosting's job.** Use the included Caddy setup, and never expose Labnotebook on a network without HTTPS.
 - **Not yet independently audited or load-tested at scale.**
 
 **Tested:** 46/46 access checks (sign-in, private notes over HTTP and WebSocket, viewers' edits rejected, live
@@ -156,7 +156,7 @@ Found a problem? Please report it privately; see [SECURITY.md](SECURITY.md).
 
 ## Product description
 
-**Labbook is a self-hosted, real-time collaborative Markdown editor with LaTeX math, made for research groups.**
+**Labnotebook is a self-hosted, real-time collaborative Markdown editor with LaTeX math, made for research groups.**
 A group member creates a note and shares its link. Everyone who opens it edits the same text at the same time,
 sees named cursors, and watches a typeset preview update with every keystroke. Edits from several people merge
 automatically, so no one is ever locked out or asked to resolve a conflict.
@@ -166,7 +166,7 @@ toolbar with headings, lists, tables, code, links, equations, text colours and h
 own fonts, text size, page width and theme. An optional AI assistant, powered by Anthropic's Claude, can
 rephrase a selected passage while keeping its meaning, numbers and math intact. Nothing changes until the author accepts.
 
-Labbook runs as a single small service with one database file, on a lab machine, a university virtual machine or a
+Labnotebook runs as a single small service with one database file, on a lab machine, a university virtual machine or a
 low-cost cloud server. Notes stay on that server and download as plain `.md` files at any time.
 
 | Specification | Detail |
@@ -187,7 +187,7 @@ instance with HTTPS, backups and updates), or roll it out across a department on
 
 ## Installation
 
-Labbook needs **Node.js 20 or newer** (which includes `npm`) and **git**. Docker is only needed if you
+Labnotebook needs **Node.js 20 or newer** (which includes `npm`) and **git**. Docker is only needed if you
 deploy with Docker on a server.
 
 ### macOS
@@ -236,14 +236,14 @@ or [Docker Desktop](https://docs.docker.com/desktop/) on macOS and Windows. Chec
 ## Quick start
 
 ```bash
-git clone https://github.com/sourasb05/md_share.git
-cd md_share
+git clone https://github.com/sourasb05/labnotebook.git
+cd labnotebook
 npm install
 npm run build
 npm start              # → http://localhost:3000
 ```
 
-Open the same note in two browser windows to see live co-editing. Without sign-in configured, Labbook runs in
+Open the same note in two browser windows to see live co-editing. Without sign-in configured, Labnotebook runs in
 **local mode**: no accounts, and the server only listens on this computer (`127.0.0.1`), so nobody else on the
 network can reach it. Stop the server with Ctrl+C.
 
@@ -277,12 +277,12 @@ ALLOWED_DOMAINS=your-uni.edu PUBLIC_URL=https://notes.your-lab.org HOST=0.0.0.0 
 
 ### Sign-in by email link
 
-Set `SMTP_URL` and `MAIL_FROM` so Labbook can email one-time sign-in links, e.g. your university's mail server or
+Set `SMTP_URL` and `MAIL_FROM` so Labnotebook can email one-time sign-in links, e.g. your university's mail server or
 a transactional email service:
 
 ```bash
 SMTP_URL='smtps://user:password@smtp.your-uni.edu:465'
-MAIL_FROM='Labbook <notes@your-lab.org>'
+MAIL_FROM='Labnotebook <notes@your-lab.org>'
 ```
 
 Without `SMTP_URL`, links are printed in the server's terminal instead, which is handy for trying it out.
@@ -294,7 +294,7 @@ Without `SMTP_URL`, links are printed in the server's terminal instead, which is
    (e.g. `https://notes.your-lab.org/auth/github/callback`).
 3. Copy the **Client ID**, generate a **Client secret**, and set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
 
-Labbook only asks GitHub for the account's email addresses, and lets people in only with a **verified** address at
+Labnotebook only asks GitHub for the account's email addresses, and lets people in only with a **verified** address at
 an allowed domain. Email and GitHub sign-in lead to the same account when the address matches.
 
 ### Sharing
@@ -349,10 +349,10 @@ another machine** (rsync, rclone, your university's storage): a backup on the sa
 Run it nightly with cron (`crontab -e`):
 
 ```cron
-15 3 * * * cd /path/to/md_share && /usr/bin/env node scripts/backup.mjs >> data/backup.log 2>&1
+15 3 * * * cd /path/to/labnotebook && /usr/bin/env node scripts/backup.mjs >> data/backup.log 2>&1
 ```
 
-With Docker: `15 3 * * * docker compose -f /path/to/md_share/docker-compose.yml exec -T mdshare node scripts/backup.mjs`
+With Docker: `15 3 * * * docker compose -f /path/to/labnotebook/docker-compose.yml exec -T mdshare node scripts/backup.mjs`
 
 To restore, stop the server, then:
 
@@ -451,7 +451,7 @@ data/              SQLite database (created on first run, never committed)
 
 <details><summary><b>Where are our notes stored?</b></summary>
 
-On the server you run Labbook on, in a single SQLite database file. Nothing is sent elsewhere, except the passages
+On the server you run Labnotebook on, in a single SQLite database file. Nothing is sent elsewhere, except the passages
 someone explicitly asks the optional AI to rephrase.
 </details>
 
@@ -468,7 +468,7 @@ Yes. Any note downloads as a plain Markdown file, and colours and highlights are
 <details><summary><b>What happens if the Wi-Fi drops mid-meeting?</b></summary>
 
 Keep typing. Your edits are kept in the open page and merge with everyone else's when the connection returns.
-Labbook is not an offline app, though, so closing the tab while disconnected loses unsynced edits.
+Labnotebook is not an offline app, though, so closing the tab while disconnected loses unsynced edits.
 </details>
 
 <details><summary><b>How many people can edit at once?</b></summary>
@@ -480,13 +480,13 @@ It is designed for a research group and has been tested with up to four people i
 
 Copyright © 2026 sourasb05.
 
-Labbook is free software, released under the **[GNU Affero General Public License v3.0 or later](LICENSE)** (AGPL-3.0-or-later).
+Labnotebook is free software, released under the **[GNU Affero General Public License v3.0 or later](LICENSE)** (AGPL-3.0-or-later).
 
 In plain words (the [LICENSE](LICENSE) text is what counts):
 
-- ✅ You may use, study, change and share Labbook, including for commercial purposes and inside your organisation.
+- ✅ You may use, study, change and share Labnotebook, including for commercial purposes and inside your organisation.
 - ✅ You may run it for your group, department or customers.
-- 🔁 If you **modify** Labbook and let other people use it over a network, you must offer them the source code
+- 🔁 If you **modify** Labnotebook and let other people use it over a network, you must offer them the source code
   of your modified version under the same licence. The **Source code** link on the home page helps with this.
 - 🔁 If you distribute copies, keep the licence and copyright notices.
 - ❌ There is no warranty.

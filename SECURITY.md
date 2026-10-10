@@ -14,4 +14,4 @@ version (commit) you tested. You should get a reply within a week.
 - If an Anthropic API key, SMTP password or GitHub client secret is ever exposed, revoke it immediately and create a new one.
 - Back up `data/mdshare.sqlite` regularly; there is no version history yet.
 
-See the **Security** section of the README for what Labbook protects against today and its known limits.
+See the **Security** section of the README for what Labnotebook protects against today and its known limits.

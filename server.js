@@ -1,4 +1,4 @@
-// Labbook server: Express for pages + REST, Hocuspocus for real-time sync.
+// Labnotebook server: Express for pages + REST, Hocuspocus for real-time sync.
 // Run: npm run build && npm start   (then open http://localhost:3000)
 import { Server } from "@hocuspocus/server";
 import { SQLite } from "@hocuspocus/extension-sqlite";
@@ -40,10 +40,10 @@ const loopback = ["127.0.0.1", "::1", "localhost"].includes(HOST);
 const fatal = (msg) => { console.error(msg); process.exit(1); };
 if (!loopback && LOCAL_MODE) fatal(`Refusing to listen on ${HOST} without ALLOWED_DOMAINS: anyone on the network could read and edit every note.`);
 if (ALLOWED_DOMAINS.some((d) => !/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(d))) fatal(`ALLOWED_DOMAINS must look like "uni.edu,lab.org" (got "${env.ALLOWED_DOMAINS}").`);
-if (SMTP_URL && !MAIL_FROM) fatal("Set MAIL_FROM (e.g. \"Labbook <notes@your-lab.org>\") when SMTP_URL is set.");
+if (SMTP_URL && !MAIL_FROM) fatal("Set MAIL_FROM (e.g. \"Labnotebook <notes@your-lab.org>\") when SMTP_URL is set.");
 if (!!GITHUB_ID !== !!GITHUB_SECRET) fatal("Set both GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET, or neither.");
 try { new URL(PUBLIC_URL); } catch { fatal(`PUBLIC_URL is not a valid URL: ${PUBLIC_URL}`); }
-if (env.GROUP_PASSWORD) console.warn("GROUP_PASSWORD is no longer used: Labbook now has personal sign-in (see ALLOWED_DOMAINS in the README).");
+if (env.GROUP_PASSWORD) console.warn("GROUP_PASSWORD is no longer used: Labnotebook now has personal sign-in (see ALLOWED_DOMAINS in the README).");
 if (!LOCAL_MODE && !loopback && !PUBLIC_URL.startsWith("https://")) console.warn(`PUBLIC_URL (${PUBLIC_URL}) is not https: sign-in links and cookies would travel unencrypted.`);
 const mailer = SMTP_URL ? nodemailer.createTransport(SMTP_URL) : null;
 
@@ -296,9 +296,9 @@ app.post("/auth/email", async (req, res) => {
   } else {
     try {
       await mailer.sendMail({
-        from: MAIL_FROM, to: email, subject: "Your Labbook sign-in link",
-        text: `Sign in to Labbook:\n\n${link}\n\nThe link works once and expires in ${LINK_MINUTES} minutes.\nIf you didn't ask for it, you can ignore this email.`,
-        html: `<p>Sign in to Labbook:</p><p><a href="${link}">Sign in</a></p><p>The link works once and expires in ${LINK_MINUTES} minutes. If you didn't ask for it, you can ignore this email.</p>`,
+        from: MAIL_FROM, to: email, subject: "Your Labnotebook sign-in link",
+        text: `Sign in to Labnotebook:\n\n${link}\n\nThe link works once and expires in ${LINK_MINUTES} minutes.\nIf you didn't ask for it, you can ignore this email.`,
+        html: `<p>Sign in to Labnotebook:</p><p><a href="${link}">Sign in</a></p><p>The link works once and expires in ${LINK_MINUTES} minutes. If you didn't ask for it, you can ignore this email.</p>`,
       });
     } catch (err) {
       console.error("sending sign-in email failed:", err.message);
@@ -315,11 +315,11 @@ app.get("/auth/email/verify", (req, res) => {
   const row = validToken(token) && q.getToken.get(sha256hex(token));
   if (!row || row.used_at || row.expires_at <= Date.now()) return back(res, { error: "link" });
   res.type("html").send(`<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>Sign in · Labbook</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Sign in · Labnotebook</title>
 <script src="/assets/theme.js"></script><link rel="stylesheet" href="/assets/fonts/fonts.css"><link rel="stylesheet" href="/assets/style.css">
 <link rel="icon" href="/assets/favicon.png" type="image/png"></head><body class="home-page">
 <form class="login" method="post" action="/auth/email/verify"><img class="logo" src="/assets/logo-mark.png" alt="" width="28" height="28">
-<h1>Sign in to Labbook</h1><p class="muted">Continue as <b>${row.email.replace(/[<>&"]/g, "")}</b>.</p>
+<h1>Sign in to Labnotebook</h1><p class="muted">Continue as <b>${row.email.replace(/[<>&"]/g, "")}</b>.</p>
 <input type="hidden" name="token" value="${token}"><button class="primary" type="submit">Sign in</button></form></body></html>`);
 });
 // Magic link, step 3: use the token (once) and start a session
@@ -365,7 +365,7 @@ app.get("/auth/github/callback", async (req, res) => {
     })).json();
     if (!tok.access_token) return back(res, { error: "github", next });
     const gh = (p) => fetch(`${GITHUB_API_URL}${p}`, { ...opts,
-      headers: { Authorization: `Bearer ${tok.access_token}`, Accept: "application/vnd.github+json", "User-Agent": "Labbook" } })
+      headers: { Authorization: `Bearer ${tok.access_token}`, Accept: "application/vnd.github+json", "User-Agent": "Labnotebook" } })
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`GitHub ${p}: ${r.status}`))));
     const [profile, emails] = await Promise.all([gh("/user"), gh("/user/emails")]);
     const usable = (Array.isArray(emails) ? emails : [])
@@ -607,7 +607,7 @@ function refreshConnections(noteId) {
 }
 
 server.listen().then(() => {
-  console.log(`Labbook running on http://${HOST.includes(":") ? `[${HOST}]` : HOST}:${PORT}  (data: ${DB_FILE})`);
+  console.log(`Labnotebook running on http://${HOST.includes(":") ? `[${HOST}]` : HOST}:${PORT}  (data: ${DB_FILE})`);
   if (LOCAL_MODE) console.log("Sign-in: OFF (local mode, this computer only). Set ALLOWED_DOMAINS to let your group sign in.");
   else console.log(`Sign-in: ON for ${ALLOWED_DOMAINS.map((d) => "@" + d).join(", ")} · email links ${mailer ? "by SMTP" : "printed here (no SMTP_URL)"} · GitHub ${GITHUB_ID ? "on" : "off"} · public URL ${PUBLIC_URL}`);
 });
