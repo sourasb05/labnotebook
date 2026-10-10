@@ -138,7 +138,7 @@ function render() {
   });
   const h = src.match(/^\s*#\s+(.+)$/m);
   const title = (h ? h[1] : "Untitled").replace(/<[^>]*>/g, "").replace(/[#*_`$~=]/g, "").trim() || "Untitled";
-  document.title = `${title} · MdShare`;
+  document.title = `${title} · Labbook`;
   $("#title").textContent = title;
   const words = src.replace(/<[^>]*>/g, " ").match(/[\p{L}\p{N}]+/gu)?.length || 0;
   $("#wordcount").textContent = `${words.toLocaleString()} ${words === 1 ? "word" : "words"} · ${Math.max(1, Math.round(words / 230))} min read`;
@@ -577,7 +577,7 @@ function renderShare(info) {
   const isOwner = info.role === "owner" && !info.local;
   share.ownerUi.hidden = !isOwner;
   if (info.local) {
-    share.info.textContent = "Sign-in isn't set up on this server, so sharing with people is off. Anyone who can open MdShare here can open this link.";
+    share.info.textContent = "Sign-in isn't set up on this server, so sharing with people is off. Anyone who can open Labbook here can open this link.";
     return;
   }
   const domains = info.domains.map((d) => "@" + d).join(", ");

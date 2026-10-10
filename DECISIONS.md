@@ -88,3 +88,9 @@
   mark (public/logo-mark.png in the top bar and sign-in pages, public/favicon.png as the tab icon); favicon.svg is
   gone. The README shows docs/images/logo.png, with a light-text copy (logo-dark.png) for GitHub dark mode via
   <picture>. No new dependencies; images are served from /assets like the rest, so the CSP is unchanged.
+- 2026-10-10 — Renamed the app from MdShare to Labbook (another app already uses "MdShare"). Every visible name
+  changed: page titles, top bar, sign-in pages, README, docs and the package name. The README logo is redrawn as
+  "labbook" (Inter 800 beside the same book mark). Internal identifiers stay as they were on purpose, because
+  renaming them would break existing installs: the database file data/mdshare.sqlite and backup names, the session
+  cookies (signing everyone out), localStorage keys (losing people's preferences) and the window.__mdshare test hook.
+  The GitHub repository is still sourasb05/md_share.

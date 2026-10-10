@@ -1,5 +1,5 @@
 {
-  "name": "mdshare",
+  "name": "labbook",
   "version": "0.3.0",
   "description": "Shared real-time Markdown notes with LaTeX math (HackMD-style)",
   "license": "AGPL-3.0-or-later",
