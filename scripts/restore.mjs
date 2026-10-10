@@ -1,4 +1,4 @@
-// Restore the MdShare database from a backup.
+// Restore the Labbook database from a backup.
 // 1. Stop the server.  2. npm run restore -- path/to/mdshare-YYYY-MM-DD_HH-MM-SS.sqlite --yes  3. Start the server.
 // The current database is kept next to it as mdshare.sqlite.before-restore-<time>, so a restore can be undone.
 import Database from "better-sqlite3";
@@ -25,7 +25,7 @@ const running = await new Promise((resolve) => {
   const s = net.connect({ port: PORT, host: "127.0.0.1" }, () => { s.end(); resolve(true); });
   s.on("error", () => resolve(false));
 });
-if (running) { console.error(`Something is running on port ${PORT}. Stop the MdShare server first.`); process.exit(1); }
+if (running) { console.error(`Something is running on port ${PORT}. Stop the Labbook server first.`); process.exit(1); }
 
 const check = new Database(backup, { readonly: true, fileMustExist: true });
 const integrity = check.pragma("integrity_check", { simple: true });

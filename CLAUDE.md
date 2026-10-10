@@ -1,6 +1,6 @@
-# Instructions for AI coding assistants working on MdShare
+# Instructions for AI coding assistants working on Labbook
 
-MdShare is a HackMD-style collaborative Markdown editor for a research group (internal first,
+Labbook is a HackMD-style collaborative Markdown editor for a research group (internal first,
 public later). The engineering plan is the source of truth for scope and milestones.
 
 ## Hard rules

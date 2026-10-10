@@ -1,4 +1,4 @@
-// Back up the MdShare database while the server keeps running, check the copy, and keep the newest N.
+// Back up the Labbook database while the server keeps running, check the copy, and keep the newest N.
 // Usage: npm run backup            (or: node scripts/backup.mjs)
 // Settings: DATA_DIR (default ./data), BACKUP_DIR (default DATA_DIR/backups), BACKUP_KEEP (default 14)
 // Copy the backup folder to another machine too (rsync, rclone, your university's storage): a backup on
