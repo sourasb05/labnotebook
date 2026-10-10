@@ -335,6 +335,45 @@ docker compose up -d --build
 Put it behind HTTPS (Caddy, nginx, or your department's reverse proxy). The proxy must pass WebSocket upgrades and
 the `Host` header through. A Caddy example is in [`Caddyfile.example`](Caddyfile.example).
 
+### Test the Docker image on your server
+
+Before your group relies on it, check the image on the server itself. `npm run test:docker` signs two people in,
+creates a private note, shares it, edits it from both sides at once, restarts the container, and checks that the
+note, the session and the backup all survive (12 checks). It runs against a **separate test container** with its own
+throwaway data, so your real notes are never touched, and it reads sign-in links from the container's log, so the
+test container has no mail settings.
+
+**1. On the server**, build the image and start a test container next to the real one:
+
+```bash
+cd labnotebook && git pull
+docker build -t labnotebook:test .
+mkdir -p /tmp/labnotebook-test && sudo chown 1000:1000 /tmp/labnotebook-test
+docker run -d --name labnotebook-test -p 127.0.0.1:3001:3000 -v /tmp/labnotebook-test:/data \
+  -e ALLOWED_DOMAINS=example.org -e PUBLIC_URL=http://localhost:3001 \
+  --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges:true labnotebook:test
+```
+
+**2. On your laptop** (where `npx playwright install chromium` has been run), reach the test container through an
+SSH tunnel and run the check. The browser stays on your laptop; `docker` commands go over SSH:
+
+```bash
+ssh -N -L 3001:127.0.0.1:3001 you@your-server &
+DOCKER="ssh you@your-server docker" npm run test:docker
+kill %1                                   # close the tunnel
+```
+
+**3. Clean up** on the server: `docker rm -f labnotebook-test && sudo rm -rf /tmp/labnotebook-test`.
+
+Then check the real deployment by hand, since it uses real email and HTTPS, which the test container doesn't:
+
+- `curl -sI https://notes.your-lab.org/healthz` shows `200` and a `strict-transport-security` header.
+- Sign in at `https://notes.your-lab.org` and confirm the email link arrives (check spam too).
+- Open one note on two devices, one of them a phone on mobile data, and type on both: the edits appear live.
+  If they don't, the proxy isn't passing WebSocket upgrades.
+- Run the backup once (`docker compose exec -T mdshare node scripts/backup.mjs`) and check that a file appears in
+  `data/backups/`.
+
 ### Backups and restore
 
 All notes, accounts and sharing settings live in `data/mdshare.sqlite`. Back it up every night:
@@ -413,6 +452,7 @@ npm run test:access                 # sign-in, sharing, viewers can't edit (46 c
 npm run test:security               # starts its own server and tries to break in (37 checks)
 npm run test:rephrase               # AI rephrase against a fake Claude API (no key, no cost)
 npm run test:backup                 # backup → change → restore drill
+npm run test:docker                 # a running Docker container end to end (see "Test the Docker image")
 ```
 
 Every push runs all of these on GitHub Actions (Node 22 and 24); see the CI badge at the top. Dependabot opens

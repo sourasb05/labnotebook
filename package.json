@@ -18,7 +18,8 @@
     "test:access": "node test/access.mjs",
     "test:backup": "node test/backup.mjs",
     "test:rephrase": "node test/rephrase.mjs",
-    "test:formatting": "node test/formatting.mjs"
+    "test:formatting": "node test/formatting.mjs",
+    "test:docker": "node test/docker.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.132.1",

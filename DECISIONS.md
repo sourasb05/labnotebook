@@ -103,3 +103,7 @@
   the container passed 10/10: email sign-in, editing with LaTeX, signed-out and unshared users refused, sharing,
   live co-editing, healthcheck healthy, notes and sessions survive a restart. `docker exec … node
   scripts/backup.mjs` writes to /data/backups as expected. Not yet tried on the Linux production server or behind Caddy.
+- 2026-10-11 — test/docker.mjs (`npm run test:docker`): 12 end-to-end checks against a running container, for
+  trying the image on the real server. It runs against a separate test container (own data, no SMTP, sign-in links
+  read from `docker logs`), and from the laptop: the port goes through an SSH tunnel and DOCKER="ssh host docker"
+  runs docker remotely, so the server needs no browser. Not in CI yet (it needs a built image and a container).
