@@ -317,8 +317,8 @@ app.get("/auth/email/verify", (req, res) => {
   res.type("html").send(`<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Sign in · MdShare</title>
 <script src="/assets/theme.js"></script><link rel="stylesheet" href="/assets/fonts/fonts.css"><link rel="stylesheet" href="/assets/style.css">
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"></head><body class="home-page">
-<form class="login" method="post" action="/auth/email/verify"><span class="logo" aria-hidden="true">M↓</span>
+<link rel="icon" href="/assets/favicon.png" type="image/png"></head><body class="home-page">
+<form class="login" method="post" action="/auth/email/verify"><img class="logo" src="/assets/logo-mark.png" alt="" width="28" height="28">
 <h1>Sign in to MdShare</h1><p class="muted">Continue as <b>${row.email.replace(/[<>&"]/g, "")}</b>.</p>
 <input type="hidden" name="token" value="${token}"><button class="primary" type="submit">Sign in</button></form></body></html>`);
 });

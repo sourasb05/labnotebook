@@ -84,3 +84,7 @@
   `test (22)` and `test (24)` must pass, no force-push, no deletion. Repository admins may bypass in an emergency.
   No approving review required (single maintainer). The first protected PR fixed a flaky sign-out test that had
   made CI fail at random.
+- 2026-10-10 — Logo: the book-shaped "md_share" mark replaces the "M↓" text badge. The app uses PNG crops of the
+  mark (public/logo-mark.png in the top bar and sign-in pages, public/favicon.png as the tab icon); favicon.svg is
+  gone. The README shows docs/images/logo.png, with a light-text copy (logo-dark.png) for GitHub dark mode via
+  <picture>. No new dependencies; images are served from /assets like the rest, so the CSP is unchanged.
