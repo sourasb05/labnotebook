@@ -1,4 +1,9 @@
-# MdShare
+<h1 align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/logo-dark.png">
+    <img src="docs/images/logo.png" alt="MdShare" width="420">
+  </picture>
+</h1>
 
 [![CI](https://github.com/sourasb05/md_share/actions/workflows/ci.yml/badge.svg)](https://github.com/sourasb05/md_share/actions/workflows/ci.yml)
 
