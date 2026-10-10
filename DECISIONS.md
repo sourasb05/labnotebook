@@ -98,3 +98,8 @@
   sourasb05/labnotebook (GitHub redirects the old address, including git remotes). README logo redrawn as
   "labnotebook"; links, the CI badge, clone instructions and package name updated. The same internal identifiers
   as before (mdshare.sqlite, cookies, localStorage keys, window.__mdshare) are kept, for the same reasons.
+- 2026-10-11 — Docker image tested for the first time (Docker Desktop 29.8, macOS): builds in ~40 s and runs with
+  the docker-compose hardening (read-only, cap_drop ALL, no-new-privileges, uid 1000). End-to-end check against
+  the container passed 10/10: email sign-in, editing with LaTeX, signed-out and unshared users refused, sharing,
+  live co-editing, healthcheck healthy, notes and sessions survive a restart. `docker exec … node
+  scripts/backup.mjs` writes to /data/backups as expected. Not yet tried on the Linux production server or behind Caddy.
