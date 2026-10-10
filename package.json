@@ -1,11 +1,11 @@
 {
-  "name": "labbook",
+  "name": "labnotebook",
   "version": "0.3.0",
   "description": "Shared real-time Markdown notes with LaTeX math (HackMD-style)",
   "license": "AGPL-3.0-or-later",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sourasb05/md_share.git"
+    "url": "git+https://github.com/sourasb05/labnotebook.git"
   },
   "scripts": {
     "build": "node scripts/build.mjs",

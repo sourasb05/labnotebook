@@ -1,6 +1,6 @@
-# Instructions for AI coding assistants working on Labbook
+# Instructions for AI coding assistants working on Labnotebook
 
-Labbook is a HackMD-style collaborative Markdown editor for a research group (internal first,
+Labnotebook is a HackMD-style collaborative Markdown editor for a research group (internal first,
 public later). The engineering plan is the source of truth for scope and milestones.
 
 ## Hard rules

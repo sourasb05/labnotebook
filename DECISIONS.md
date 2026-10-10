@@ -94,3 +94,7 @@
   renaming them would break existing installs: the database file data/mdshare.sqlite and backup names, the session
   cookies (signing everyone out), localStorage keys (losing people's preferences) and the window.__mdshare test hook.
   The GitHub repository is still sourasb05/md_share.
+- 2026-10-11 — Renamed again, from Labbook to Labnotebook, and the GitHub repository from sourasb05/md_share to
+  sourasb05/labnotebook (GitHub redirects the old address, including git remotes). README logo redrawn as
+  "labnotebook"; links, the CI badge, clone instructions and package name updated. The same internal identifiers
+  as before (mdshare.sqlite, cookies, localStorage keys, window.__mdshare) are kept, for the same reasons.
