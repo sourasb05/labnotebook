@@ -29,7 +29,7 @@
     "express": "^5.2.1",
     "lib0": "^0.2.119",
     "nanoid": "^6.0.2",
-    "nodemailer": "^10.0.16",
+    "nodemailer": "^10.1.4",
     "y-protocols": "^1.0.7",
     "yjs": "^13.6.33"
   },
