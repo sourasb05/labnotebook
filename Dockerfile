@@ -1,5 +1,5 @@
 # Build stage: install everything, build the browser bundles, then drop dev-only packages
-FROM node:24-trixie-slim AS build
+FROM node:26-trixie-slim AS build
 WORKDIR /app
 COPY package*.json ./
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
@@ -8,7 +8,7 @@ COPY . .
 RUN npm run build && npm prune --omit=dev
 
 # Runtime stage: only Node, the app and its production packages (npm itself is removed: never needed to run)
-FROM node:24-trixie-slim
+FROM node:26-trixie-slim
 RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack \
       /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack \
   && mkdir -p /data && chown node:node /data
